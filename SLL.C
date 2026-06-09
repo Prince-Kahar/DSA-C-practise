@@ -4,7 +4,7 @@ struct SLL
 {
     int data;
     struct SLL *next;
-} *head, *node, *temp;
+} *head, *node, *temp, *ptemp;
 
 void create_node()
 {
@@ -22,6 +22,7 @@ void create_node()
 }
 
 void insert_beg();
+void insertBeforePos();
 // void insert_end();
 void display();
 
@@ -37,7 +38,7 @@ void insert_menu()
 {
     printf("\n 1.Insert at the front");
     printf("\n 2.Insert at the end");
-    printf("\n 3.Insert at the after specific position");
+    printf("\n 3.Insert at the Before specific position");
     printf("\n 4.Insert at the after specific value");
     printf("\n 5.Insert into sorted Linked list");
     printf("\n 6.Back to main menu");
@@ -75,7 +76,7 @@ int main()
 
                 case 3:
                     // system("clear");
-                    printf("Aave che");
+                    insertBeforePos();
                     break;
 
                 case 6:
@@ -112,6 +113,34 @@ void insert_beg()
     create_node();
     node->next = head;
     head = node;
+}
+
+void insertBeforePos()
+{
+    int pos, i;
+    printf("Enter position=>");
+    scanf("%d", &pos);
+    temp = head;
+    for (i = 1; i < pos; i++)
+    {
+        ptemp = temp;
+        temp = temp->next;
+        if (temp == NULL)
+        {
+            printf("Position not found....");
+            return;
+        }
+    }
+    int value;
+
+    printf("Enter A Value/Data: ");
+    scanf("%d", &value);
+
+    node = (struct SLL *)malloc(sizeof(struct SLL));
+
+    node->data = value;
+    ptemp->next = node;
+    node->next = temp;
 }
 
 void display()
