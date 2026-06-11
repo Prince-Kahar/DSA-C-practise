@@ -18,6 +18,9 @@ void insertBeforePos();
 void insertAfterPos();
 
 void display();
+void originalDisplay();
+void sortedDisplay();
+void reverseDisplay();
 
 int main()
 {
@@ -202,7 +205,79 @@ void insertBeforePos()
     printf("Succefully Inserted Value Before %d.... \n", pos);
 }
 
+void insertAfterPos()
+{
+    struct Singly *pTemp;
+    int pos;
+
+    printf("Enter position after you have a insert: ");
+    scanf("%d", &pos);
+
+    temp = head;
+
+    for (int i = 1; i <= pos; i++)
+    {
+        pTemp = temp;
+        temp = temp->next;
+
+        if (temp == NULL)
+        {
+            printf("Position Not Found....\n");
+            return;
+        }
+    }
+
+    create_node();
+    pTemp->next = node;
+    node->next = temp;
+
+    printf("Succefully Inserted Value After %d.... \n", pos);
+}
+
 void display()
+{
+
+    int choice;
+    do
+    {
+        printf("\nDisplay options\n");
+        printf(" 1. Original Display\n");
+        printf(" 2. Sorted Display\n");
+        printf(" 3. Reverse Display\n");
+        printf(" 4. Exit\n");
+
+        printf("Eneter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+        case 1:
+            system("cls");
+            originalDisplay();
+            break;
+
+        case 2:
+            system("cls");
+            sortedDisplay();
+            break;
+
+        case 3:
+            system("cls");
+            reverseDisplay();
+            break;
+
+        case 4:
+            system("cls");
+            printf("Fhir milenge....\n");
+            break;
+
+        default:
+            printf("You are choose invalid option....\n");
+        }
+    } while (choice != 4);
+}
+
+void originalDisplay()
 {
     int count1 = 1;
     if (head == NULL)
@@ -214,9 +289,93 @@ void display()
     do
     {
 
-        printf("  %d", temp->info);
+        printf("%d\t", temp->info);
         temp = temp->next;
         count1++;
 
     } while (count1 <= count);
+}
+
+void sortedDisplay()
+{
+    int t, sd[count];
+    if (head == NULL)
+    {
+        printf(" Singly Linked List is Empty\n");
+        return;
+    }
+
+    temp = head;
+    int i = 0, j;
+    while (temp != NULL)
+    {
+        sd[i] = temp->info;
+        i++;
+        temp = temp->next;
+    }
+
+    for (i = 0; i < count; i++)
+    {
+        j = i + 1;
+        for (j = i + 1; j < count; j++)
+        {
+            if (sd[i] > sd[j])
+            {
+                t = sd[i];
+                sd[i] = sd[j];
+                sd[j] = t;
+            }
+        }
+    }
+
+    i = 0;
+    while (i < count)
+    {
+        printf("%d\t", sd[i]);
+        i++;
+    }
+
+    // temp1 = head;
+
+    // while (temp1 != NULL)
+    // {
+    //     temp2 = temp1->next;
+    //     while (temp2 != NULL)
+    //     {
+    //         if (temp1->info > temp2->info)
+    //         {
+    //             t = temp1->info;
+    //             temp1->info = temp2->info;
+    //             temp2->info = t;
+    //         }
+    //         temp2 = temp2->next;
+    //     }
+    //     printf("%d  ", temp1->info);
+    //     temp1 = temp1->next;
+    // }
+    // printf("Finish\n");
+}
+
+void reverseDisplay()
+{
+    int t, sd[count];
+    int i = 0, j;
+    if (head == NULL)
+    {
+        printf(" Singly Linked List is Empty\n");
+        return;
+    }
+
+    temp = head;
+    while (temp != NULL)
+    {
+        sd[i] = temp->info;
+        i++;
+        temp = temp->next;
+    }
+
+    for (i = count - 1; i >= 0; i--)
+    {
+        printf("%d\t", sd[i]);
+    }
 }
