@@ -1,3 +1,5 @@
+// Postfix Second Name Reverse Polish Notation (RPN).
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

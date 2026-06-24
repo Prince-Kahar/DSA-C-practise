@@ -1,3 +1,5 @@
+// Prefix Second Name Polish Notation (PN).
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -123,4 +125,3 @@ char pop()
 
     return pop_value;
 }
-
