@@ -9,11 +9,18 @@ struct node
 } *head, *temp, *new;
 
 void menu();
+
 void insert();
+
 void Create_node();
 void InsertFromFront();
 void InsertFromRear();
 void InsertAtPosition();
+
+void DeleteFromFront();
+void DeleteFromRear();
+void DeleteAtPosition();
+
 void display();
 
 int main()
@@ -94,6 +101,49 @@ void insert()
         case 3:
             system("cls");
             InsertAtPosition();
+            break;
+
+        case 0:
+            system("cls");
+            printf("Go Back\n");
+            break;
+
+        default:
+            system("cls");
+            printf("You Are **** \n");
+        }
+    } while (choice != 0);
+}
+
+void Delete()
+{
+    int choice;
+    do
+    {
+        printf(" ------------------------- Delete Operation ------------------------- \n");
+        printf(" | 1. Delete From Front                                             | \n");
+        printf(" | 2. Delete From Rear                                              | \n");
+        printf(" | 3. Delete from Specific Location                                 | \n");
+        printf(" | 0. Back To main menu                                             | \n");
+        printf(" -------------------------------------------------------------------- \n");
+        printf("Enter Your Choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+        case 1:
+            system("cls");
+            DeleteFromFront();
+            break;
+
+        case 2:
+            system("cls");
+            DeleteFromRear();
+            break;
+
+        case 3:
+            system("cls");
+            DeleteAtPosition();
             break;
 
         case 0:
@@ -195,6 +245,28 @@ void InsertAtPosition()
     printf("%d is Inserted At %d Successfullly\n", new->data, pos);
 }
 
+void DeleteFromFront()
+{
+    if(head == NULL)
+    {
+        printf("Linked List is Empty");
+        return;
+    }
+    temp = head;
+    head = temp->next;
+
+    free(temp);
+}
+
+void DeleteFromRear()
+{
+
+}
+
+void DeleteAtPosition()
+{
+
+}
 void display()
 {
     if (head == NULL)
