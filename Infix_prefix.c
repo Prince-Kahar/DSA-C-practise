@@ -59,7 +59,7 @@ int main()
 
         case '+':
         case '-':
-            while (top != -1 && (stack[top] == '^' || stack[top] == '*' || stack[top] == '/' ))
+            while (top != -1 && (stack[top] == '^' || stack[top] == '*' || stack[top] == '/'))
                 prefix[j++] = pop();
             push(ch);
             break;

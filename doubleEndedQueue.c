@@ -14,14 +14,13 @@ int isEmpty();
 void inputRestriction(int);
 void outputRestriction(int);
 
+void insert(int);
 void insertFromFront(int value);
 void insertFromRear(int value);
 
+void delete(int);
 void deleteFromFront();
 void deleteFromRear();
-
-void insert(int);
-void delete(int);
 
 void displayQueue();
 
