@@ -1,4 +1,5 @@
 // Singly Linked List
+
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -6,7 +7,7 @@ struct node
 {
     int data;
     struct node *next;
-} *head, *temp, *new;
+} *head, *temp, *new, *prev;
 
 void menu();
 
@@ -17,6 +18,7 @@ void InsertFromFront();
 void InsertFromRear();
 void InsertAtPosition();
 
+void Delete();
 void DeleteFromFront();
 void DeleteFromRear();
 void DeleteAtPosition();
@@ -25,7 +27,7 @@ void display();
 
 int main()
 {
-    system("cls");
+    system("clear");
     menu();
 }
 
@@ -46,27 +48,27 @@ void menu()
         switch (choice)
         {
         case 1:
-            system("cls");
+            system("clear");
             insert();
             break;
 
         case 2:
-            system("cls");
-            printf("Comming Soon....\n");
+            system("clear");
+            Delete();
             break;
 
         case 3:
-            system("cls");
+            system("clear");
             display();
             break;
 
         case 4:
-            system("cls");
+            system("clear");
             printf("Alvida\n");
             break;
 
         default:
-            system("cls");
+            system("clear");
             printf("You Are **** \n");
         }
     } while (choice != 4);
@@ -89,27 +91,27 @@ void insert()
         switch (choice)
         {
         case 1:
-            system("cls");
+            system("clear");
             InsertFromFront();
             break;
 
         case 2:
-            system("cls");
+            system("clear");
             InsertFromRear();
             break;
 
         case 3:
-            system("cls");
+            system("clear");
             InsertAtPosition();
             break;
 
         case 0:
-            system("cls");
+            system("clear");
             printf("Go Back\n");
             break;
 
         default:
-            system("cls");
+            system("clear");
             printf("You Are **** \n");
         }
     } while (choice != 0);
@@ -132,27 +134,27 @@ void Delete()
         switch (choice)
         {
         case 1:
-            system("cls");
+            system("clear");
             DeleteFromFront();
             break;
 
         case 2:
-            system("cls");
+            system("clear");
             DeleteFromRear();
             break;
 
         case 3:
-            system("cls");
+            system("clear");
             DeleteAtPosition();
             break;
 
         case 0:
-            system("cls");
+            system("clear");
             printf("Go Back\n");
             break;
 
         default:
-            system("cls");
+            system("clear");
             printf("You Are **** \n");
         }
     } while (choice != 0);
@@ -231,7 +233,7 @@ void InsertAtPosition()
         {
             if (temp == NULL)
             {
-                system("cls");
+                system("clear");
                 printf("Position is out of bound\n");
                 return;
             }
@@ -248,7 +250,7 @@ void InsertAtPosition()
 
 void DeleteFromFront()
 {
-    if(head == NULL)
+    if (head == NULL)
     {
         printf("Linked List is Empty");
         return;
@@ -256,17 +258,74 @@ void DeleteFromFront()
     temp = head;
     head = temp->next;
 
+    printf("%d Deleted From Front Successfully\n", temp->data);
     free(temp);
 }
 
 void DeleteFromRear()
 {
+    if (head == NULL)
+    {
+        printf("Linked List is Empty");
+        return;
+    }
 
+    temp = head;
+    while (temp->next != NULL)
+    {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    printf("%d is deleted from rear succesfully\n", temp->data);
+    free(temp);
+    prev->next = NULL;
 }
 
 void DeleteAtPosition()
 {
+    int pos;
+    printf("Enter Position To deleted: ");
+    scanf("%d", &pos);
 
+    if (head == NULL)
+    {
+        printf("Linked lIst is Empty\n");
+        return;
+    }
+
+    else if (head->next == NULL && pos > 1)
+    {
+        printf("Position is out of bound\n");
+        return;
+    }
+
+    else if (pos == 1)
+    {
+        temp = head;
+        head = temp->next;
+    }
+
+    else
+    {
+        temp = head;
+        for (int i = 0; i < pos - 1 ; i++)
+        {
+            
+            if(temp == NULL)
+            {
+                printf("Poisition is Out Of Bound\n");
+                return;
+            }
+            
+            prev = temp;
+            temp = temp-> next;
+        }
+        prev->next = temp->next;
+    }
+    printf("%d is deleted from %d position succesfully\n", temp->data, pos);
+    free(temp);
+    
 }
 void display()
 {
