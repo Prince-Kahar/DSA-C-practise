@@ -247,7 +247,6 @@ void InsertAtPosition()
     printf("%d is Inserted At %d Successfullly\n", new->data, pos);
 }
 
-
 void DeleteFromFront()
 {
     if (head == NULL)
@@ -327,6 +326,7 @@ void DeleteAtPosition()
     free(temp);
     
 }
+
 void display()
 {
     if (head == NULL)
