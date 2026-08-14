@@ -1,4 +1,4 @@
-// Postfix Second Name Reverse Polish Notation (RPN).
+// postfix Second Name Polish Notation (PN).
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,67 +6,78 @@
 
 #define MAX 100
 
-char infix[MAX], postfix[MAX], stack[MAX];
+char infix[MAX], temp[MAX], stack[MAX], postfix[MAX], temp2[MAX];
 int top = -1;
 
 void clearScreen();
-void validation(char[]);
-int operator(char);
-int operand(char);
-int precidence(char);
-void push(char);
+void push(char ch);
 char pop();
 
 int main()
 {
+    int j = 0;
     clearScreen();
-
-    int j = 0, k = 0;
-
     printf("Enter Your Expression: ");
-    if (!fgets(infix, sizeof(infix), stdin))
-        return 1;
+    fgets(infix, MAX, stdin);
 
     infix[strcspn(infix, "\n")] = '\0';
 
-    validation(infix);
-
     for (int i = 0; infix[i] != '\0'; i++)
     {
-        char curr = infix[i];
-        if (curr == ' ')
+        char ch = infix[i];
+        switch (ch)
+        {
+
+        case '(':
+            push(ch);
+            break;
+
+        case ')':
+            while (top != -1 && stack[top] != ')')
+                postfix[j++] = pop();
+            if (top != -1)
+                pop();
+            // push(ch);
+            break;
+
+        case '^':
+            push(ch);
+            break;
+
+        case '*':
+        case '/':
+            while (top != -1 && stack[top] == '^')
+                postfix[j++] = pop();
+            push(ch);
+            break;
+
+        case '+':
+        case '-':
+            while (top != -1 && (stack[top] == '^' || stack[top] == '*' || stack[top] == '/' ))
+                postfix[j++] = pop();
+            push(ch);
+            break;
+
+        case ' ':
             continue;
 
-        if (operand(curr))
-            postfix[k++] = curr;
-
-        else if (curr == '(')
-            push(curr);
-
-        else if (curr == ')')
-        {
-            while (top != -1 && stack[top] != '(')
-                postfix[k++] = pop();
-            if (top != -1 && stack[top] == '(')
-                pop();
-        }
-
-        else if (operator(curr))
-        {
-            while (top != -1 && precidence(curr) <= precidence(stack[top]))
-                postfix[k++] = pop();
-            push(curr);
+        default:
+            postfix[j++] = ch;
         }
     }
 
-    while (top != -1)
-        postfix[k++] = pop();
+    while (stack[top] != -1)
+    {
+        if (stack[top] == '(' || stack[top] == ')')
+            pop();
+        else
+            postfix[j++] = pop();
+    }
 
-    postfix[k] = '\0';
+    postfix[j] = '\0';
 
-    printf("Infix Expression: %s\n", infix);
-    printf("Postfix Expression: %s\n", postfix);
-
+    printf("\nInfix Expression: %s", infix);
+    printf("\npostfix Expression: %s", postfix);
     return 0;
 }
 
@@ -79,101 +90,14 @@ void clearScreen()
 #endif
 }
 
-int operator(char c)
+void push(char push_val)
 {
-    return c == '+' || c == '-' || c == '*' || c == '/' || c == '^';
-}
-
-int operand(char c)
-{
-    return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
-}
-
-void validation(char expr[])
-{
-    int paren_check = 0;
-    int length = strlen(expr);
-
-    if (length == 0)
-    {
-        printf("Empty expression is not valid.\n");
-        exit(1);
-    }
-
-    for (int i = 0; i < length; i++)
-    {
-        char curr = expr[i];
-        char next = (i + 1 < length ? expr[i + 1] : '\0');
-
-        if (operand(curr) || operator(curr) || curr == '(' || curr == ')' || curr == ' ')
-        {
-            if (curr == '(')
-                paren_check++;
-            else if (curr == ')')
-            {
-                paren_check--;
-                if (paren_check < 0)
-                {
-                    printf("Unmatched closing parenthesis detected.\n");
-                    exit(1);
-                }
-            }
-        }
-
-        else
-        {
-            printf("Invalid character '%c' in expression.\n", curr);
-            exit(1);
-        }
-
-        if (next != '\0')
-        {
-            if (operand(curr) && operand(next))
-            {
-                printf("Invalid expression: consecutive operands '%c%c'.\n", curr, next);
-                exit(1);
-            }
-            if (operator(curr) && operator(next))
-            {
-                printf("Invalid expression: consecutive operators '%c%c'.\n", curr, next);
-                exit(1);
-            }
-            if (curr == ')' && next == '(')
-            {
-                printf("Invalid expression: missing operator between ')' and '('.\n");
-                exit(1);
-            }
-        }
-    }
-
-    if (paren_check != 0)
-    {
-        printf("Unmatched parentheses: open and close count must be equal.\n");
-        exit(1);
-    }
-}
-
-int precidence(char c)
-{
-    if (c == '^')
-        return 3;
-    else if (c == '*' || c == '/')
-        return 2;
-    else if (c == '+' || c == '-')
-        return 1;
-    else
-        return 0;
-}
-
-void push(char c)
-{
-    if (top < MAX - 1)
-        stack[++top] = c;
+    stack[++top] = push_val;
 }
 
 char pop()
 {
-    if (top != -1)
-        return stack[top--];
-    return '\0';
+    char pop_value = stack[top--];
+
+    return pop_value;
 }

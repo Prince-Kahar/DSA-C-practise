@@ -27,7 +27,7 @@ void display();
 
 int main()
 {
-    system("clear");
+    system("cls");
     menu();
 }
 
@@ -48,27 +48,27 @@ void menu()
         switch (choice)
         {
         case 1:
-            system("clear");
+            system("cls");
             insert();
             break;
 
         case 2:
-            system("clear");
+            system("cls");
             Delete();
             break;
 
         case 3:
-            system("clear");
+            system("cls");
             display();
             break;
 
         case 4:
-            system("clear");
+            system("cls");
             printf("Alvida\n");
             break;
 
         default:
-            system("clear");
+            system("cls");
             printf("You Are **** \n");
         }
     } while (choice != 4);
@@ -91,27 +91,27 @@ void insert()
         switch (choice)
         {
         case 1:
-            system("clear");
+            system("cls");
             InsertFromFront();
             break;
 
         case 2:
-            system("clear");
+            system("cls");
             InsertFromRear();
             break;
 
         case 3:
-            system("clear");
+            system("cls");
             InsertAtPosition();
             break;
 
         case 0:
-            system("clear");
+            system("cls");
             printf("Go Back\n");
             break;
 
         default:
-            system("clear");
+            system("cls");
             printf("You Are **** \n");
         }
     } while (choice != 0);
@@ -134,27 +134,27 @@ void Delete()
         switch (choice)
         {
         case 1:
-            system("clear");
+            system("cls");
             DeleteFromFront();
             break;
 
         case 2:
-            system("clear");
+            system("cls");
             DeleteFromRear();
             break;
 
         case 3:
-            system("clear");
+            system("cls");
             DeleteAtPosition();
             break;
 
         case 0:
-            system("clear");
+            system("cls");
             printf("Go Back\n");
             break;
 
         default:
-            system("clear");
+            system("cls");
             printf("You Are **** \n");
         }
     } while (choice != 0);
@@ -233,7 +233,7 @@ void InsertAtPosition()
         {
             if (temp == NULL)
             {
-                system("clear");
+                system("cls");
                 printf("Position is out of bound\n");
                 return;
             }
