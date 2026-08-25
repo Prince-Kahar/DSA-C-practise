@@ -43,7 +43,7 @@ void menu()
     do
     {
 
-        printf(" ---------------------- Circular Singly List Operations ---------------------- \n");
+        printf(" ----------------------- Doubly Linked List Operations ----------------------- \n");
         printf(" | 1. Insert                                                                 | \n");
         printf(" | 2. Delete                                                                 | \n");
         printf(" | 3. Display                                                                | \n");
@@ -129,7 +129,7 @@ void insert()
 
         case 2:
             clearScreen();
-            // insertFromRear();
+            insertFromRear();
             break;
 
         case 3:
@@ -160,6 +160,25 @@ void insertFromFront()
 
     new->nextAddress = head;
     head = new;
+}
+
+void insertFromRear()
+{
+    createNode();
+
+    if(head == NULL)
+    {
+        head->prevAddress = NULL;
+        head = new;
+    }
+
+    temp = head;
+    while(temp->nextAddress != NULL)
+        temp = temp->nextAddress;
+
+    temp->nextAddress = new;
+    new->prevAddress = temp;
+
 }
 
 void display()
@@ -222,5 +241,22 @@ void ForwardDisplay()
 
 void BackwardDisplay()
 {
+    if (head == NULL)
+    {
+        printf("Doubly Linked List is Empty ... \n");
+        return;
+    }
 
+    temp = head;
+
+    while (temp->nextAddress != NULL)
+        temp = temp->nextAddress;
+
+    while(temp != NULL)
+    {
+        printf("%d\t", temp->data);
+        temp = temp->prevAddress;
+    }
+
+    printf("\n");
 }
