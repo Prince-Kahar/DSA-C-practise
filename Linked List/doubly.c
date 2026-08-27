@@ -6,7 +6,7 @@ struct doubly
     struct doubly *prevAddress;
     int data;
     struct doubly *nextAddress;
-} *new, *head, *temp;
+} *new, *head, *temp, *prev;
 
 void clearScreen()
 {
@@ -25,6 +25,9 @@ void insertFromFront();
 void insertFromRear();
 
 void delete();
+void deleteFromFront();
+void deleteFromRear();
+
 void display();
 void ForwardDisplay();
 void BackwardDisplay();
@@ -62,7 +65,7 @@ void menu()
 
         case 2:
             clearScreen();
-            // delete();
+            delete();
             break;
 
         case 3:
@@ -164,14 +167,15 @@ void insertFromFront()
 
 void insertFromRear()
 {
-    createNode();
-
+    
     if(head == NULL)
     {
-        head->prevAddress = NULL;
-        head = new;
+        insertFromFront();
+        return;
     }
-
+    
+    createNode();
+    
     temp = head;
     while(temp->nextAddress != NULL)
         temp = temp->nextAddress;
@@ -179,6 +183,110 @@ void insertFromRear()
     temp->nextAddress = new;
     new->prevAddress = temp;
 
+}
+
+void delete()
+{
+    int choice;
+
+    do
+    {
+        printf(" ----------------- Delete Operations ----------------- \n");
+        printf(" | 1. Delete From Front                              | \n");
+        printf(" | 2. Delete From Rear                               | \n");
+        printf(" | 3. Delete From Spcific Location                   | \n");
+        printf(" | 0. Go back                                        | \n");
+        printf(" ----------------------------------------------------- \n");
+
+        printf("Enter Your Delete choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+        case 1:
+            clearScreen();
+            deleteFromFront();
+            break;
+
+        case 2:
+            clearScreen();
+            deleteFromRear();
+            break;
+
+        case 3:
+            clearScreen();
+            // deletePos();
+            break;
+
+        case 0:
+            clearScreen();
+            printf("Byyy \n");
+            break;
+
+        default:
+            clearScreen();
+            printf("You Have Choose Wrong operations ... \n");
+            break;
+        }
+
+    } while (choice != 0);
+}
+
+void deleteFromFront()
+{
+    if(head == NULL)
+    {
+        printf("Doubly Linked List is UnderFlow ... \n");
+        return;
+    }
+
+    if(head->nextAddress == NULL)
+    {
+        printf("%d is deleted suceesfully ... \n", head->data);
+        free(head);
+        head = NULL;
+        return;
+    }
+
+    temp = head;
+    printf("%d is deleted suceesfully ... \n", head->data);
+
+    head = head->nextAddress;
+    
+    if(head->nextAddress != NULL)
+        head->prevAddress = NULL;
+
+    free(temp);
+}
+
+void deleteFromRear()
+{
+    if(head == NULL)
+    {
+        printf("Doubly Linked List is UnderFlow ... \n");
+        return;
+    }
+
+    if(head->nextAddress == NULL)
+    {
+        printf("%d is deleted successfully ... \n", head->data);
+        free(head);
+        head = NULL;
+        return;
+    }
+
+    temp = head;
+    while(temp->nextAddress != NULL)
+    {
+        prev = temp;
+        temp = temp->nextAddress;
+    }
+
+    prev->nextAddress = NULL;
+
+    printf("%d is deleted successfully ... \n", temp->data);
+    
+    free(temp);
 }
 
 void display()
