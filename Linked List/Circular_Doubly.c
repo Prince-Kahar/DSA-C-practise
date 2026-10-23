@@ -25,6 +25,8 @@ void insertFromFront();
 void insertFromRear();
 
 void delete();
+void deleteFromFront();
+void deleteFromRear();
 
 void display();
 void ForwardDisplay();
@@ -164,6 +166,7 @@ void insertFromFront()
         new->nextAddress = head;
         new->prevAddress = head->prevAddress;
         head->prevAddress->nextAddress = new;
+        head->prevAddress = new;
     }
     head = new;
 }
@@ -182,7 +185,104 @@ void insertFromRear()
     }
 }
 
-void delete() {}
+void delete()
+{
+    int choice;
+
+    do
+    {
+        printf(" ----------------- Delete Operations ----------------- \n");
+        printf(" | 1. Delete From Front                              | \n");
+        printf(" | 2. Delete From Rear                               | \n");
+        printf(" | 3. Delete From Spcific Location                   | \n");
+        printf(" | 0. Go back                                        | \n");
+        printf(" ----------------------------------------------------- \n");
+
+        printf("Enter Your Delete choice: ");
+        scanf("%d", &choice);
+
+        switch (choice)
+        {
+        case 1:
+            clearScreen();
+            deleteFromFront();
+            break;
+
+        case 2:
+            clearScreen();
+            deleteFromRear();
+            break;
+
+        case 3:
+            clearScreen();
+            // deletePos();
+            break;
+
+        case 0:
+            clearScreen();
+            printf("Byyy \n");
+            break;
+
+        default:
+            clearScreen();
+            printf("You Have Choose Wrong operations ... \n");
+            break;
+        }
+
+    } while (choice != 0);
+}
+
+void deleteFromFront()
+{
+    if (head == NULL)
+    {
+        printf("Circular Doubly Linked List is UnderFlow ... \n");
+        return;
+    }
+
+    else if (head->nextAddress == head)
+    {
+        printf("%d is deleted Succefuuly ... \n", head->data);
+        free(head);
+        head = NULL;
+        return;
+    }
+
+    else
+    {
+        printf("%d is deleted Succefuuly ... \n", head->data);
+        temp = head;
+        head->nextAddress->prevAddress = head->prevAddress;
+        head->prevAddress->nextAddress = head->nextAddress;
+        head = head->nextAddress;
+        free(temp);
+    }
+}
+
+void deleteFromRear()
+{
+    if (head == NULL)
+    {
+        printf("Circular Doubly Linked List is UnderFlow ... \n");
+        return;
+    }
+
+    else if (head->nextAddress == head && head->prevAddress == head)
+    {
+        deleteFromFront();
+    }
+    else
+    {
+        temp = head->prevAddress;
+        int val = temp->data;
+        printf("%d is deleted Succefuuly ... \n", val);
+
+        head->prevAddress->prevAddress->nextAddress = head;
+        head->prevAddress = head->prevAddress->prevAddress;
+        free(temp);
+        ForwardDisplay();
+    }
+}
 
 void display()
 {
@@ -232,11 +332,12 @@ void ForwardDisplay()
         return;
     }
     temp = head;
-    do
+    while (temp->nextAddress != head)
     {
         printf("%d\t", temp->data);
         temp = temp->nextAddress;
-    } while (temp != head);
+    }
+    printf("%d\t", temp->data);
     printf("\n\n");
 }
 
